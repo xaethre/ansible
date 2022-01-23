@@ -1,0 +1,24 @@
+---
+- name: Set drain mode
+  community.docker.docker_node:
+    hostname: '{{ node }}'
+    availability: drain
+
+- name: Waiting for stop containers
+  community.docker.docker_host_info:
+    containers: true
+  register: result
+  retries: 30
+  delay: 2
+  until: result.host_info.ContainersRunning == 0
+  delegate_to: '{{ node }}'
+
+- name: Remove node from Swarm Cluster
+  community.docker.docker_swarm:
+    state: absent
+    force: true
+    node_id: '{{ node }}'
+
+# On current version, the best way to delete node from Swarm Cluster:
+# command: "docker node rm {{ node }} -f"
+

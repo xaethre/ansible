@@ -1,0 +1,22 @@
+---
+# - name: Connection to Swarm Cluster
+#   debug:
+#     msg: "{{ hostvars['server1']['ansible_facts']['all_ipv4_addresses'] }}"
+# - name: Connection to Swarm Cluster
+#  community.docker.docker_swarm:
+#    state: join
+#    remote_addrs: "{{ swarm_addr }}"
+#    join_token: >
+#      {{
+#        hostvars['server1']['ansible_facts'] ['token_worker']
+#        if type == 'worker' else
+#        hostvars['server1']['ansible_facts'] ['token_manager']
+#      }}
+
+# OR
+- name: Connection to Swarm Cluster
+  community.docker.docker_swarm:
+    state: join
+    remote_addrs: "{{ swarm_addr }}"
+    join_token: "{{ lookup('file', '/home/vagrant/ansible/tokens/token-{{ type }}') }}"
+#  notify: delete_token_files

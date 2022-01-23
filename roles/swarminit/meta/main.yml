@@ -1,0 +1,10 @@
+galaxy_info:
+  role_name: swarminit
+  author: Rijndael Brown
+  description: Initialize the Swarm Cluster
+  company: Coming Soon...
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+    - name: Ubuntu
+      versions: all

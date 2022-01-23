@@ -1,0 +1,29 @@
+
+---
+- name: "Configure Config for [{{ name }}]"
+  include_tasks: "../config-rescue.yml"
+  loop:
+    - nginx.conf # Dict for nginx.conf, mimetypes, etc...
+  loop_control:
+    loop_var: config_item
+
+#---------------------------------------------
+
+- name: "Deploying Service: [{{ name }}]"
+  tags: "{{ name }}"
+  block:
+  - name: "Deploying Service: [{{ name }}]"
+    community.docker.docker_swarm_service:
+      name: "{{ name }}"
+      image: "nginx:{{ version }}"
+      state: present
+      networks:
+        - name: "{{ network_name }}"
+      publish:
+        - mode: ingress
+          protocol: tcp
+          published_port: 80
+          target_port: 80
+      configs:
+        - config_name: nginx.conf
+          filename: "/etc/nginx/nginx.conf"

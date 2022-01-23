@@ -1,0 +1,6 @@
+---
+- name: Lookup test
+  tasks:
+    - name: Lookup test
+      debug:
+        msg: "{{ lookup('file', 'file.txt') }}"

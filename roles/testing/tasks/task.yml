@@ -1,0 +1,45 @@
+---
+- name: user
+  hosts: clients
+#  vars_prompt:
+#    - name: comment
+#      prompt: "Input new comment"
+#      private: no
+#  vars_files:
+#    - /home/rijndael/ansible/demo/vars.yml
+  vars:
+    comment: 'GECOS Field'
+  tasks:
+    - name: Preconfig
+      become: true
+      block:
+        - name: Write comment in /etc/passwd
+          user:
+            name: xaethre
+            state: present
+            comment: "{{ comment }}"
+            shell: /bin/bash
+            generate_ssh_key: true
+          register: out
+          ignore_errors: true
+          when: ansible_facts['distribution'] = 'CentOS'
+        - debug:
+            var: out
+          debugger: always
+#        - name: Fail on FAILED
+#          command: echo "FAILED. FUCK YOU!"
+#          register: result
+#          failed_when: "'FAILED' in result.stdout"  # когда фейлится таск
+        - name: Install NonExistPackage
+          register: error
+          apt:
+            name: NonExistPackage
+            update-cache: true
+        rescue:
+          - name: Print error
+            debug:
+              var: error
+        always:
+          - name: reboot
+            debug:
+              msg: "Rebo-o-o-o-oting"

@@ -1,0 +1,7 @@
+---
+- name: Join
+  vars:
+    admin: ["1", "2", "3"]
+  debug:
+    msg: "{{ admin | random }}"
+# Output var 'admin' with specific delimiter

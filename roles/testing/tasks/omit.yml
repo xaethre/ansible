@@ -1,0 +1,10 @@
+---
+- name: copy files
+  file:
+    dest: "{{ item.path }}"
+    state: touch
+    mode: "{{ item.mode | default(omit) }}"
+  loop:
+    - path: "/test"
+    - path: "/test2"
+      mode: "0666"

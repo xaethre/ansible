@@ -1,0 +1,16 @@
+[deploy]
+server1 swarm_addr=10.11.10.1 ansible_user=vagrant
+
+[managers]
+server[2:3]
+
+[workers]
+server[4:5]
+
+[devel]
+server0
+
+[cluster:children]
+deploy
+managers
+workers

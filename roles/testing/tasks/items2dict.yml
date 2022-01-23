@@ -1,0 +1,13 @@
+---
+- name: Transformation items to dictionary
+  vars:
+    admin:
+      - key: a
+        value: 1
+      - key: b
+        value: 2
+  debug:
+    msg: "{{ admin | items2dict }}"
+# if not used reserved words - "key -> value":
+    msg: "{{ admin | items2dict(key_name='myKey', value_name='myValue') }}"
+

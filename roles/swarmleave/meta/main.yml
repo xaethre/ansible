@@ -1,0 +1,10 @@
+galaxy_info:
+  role_name: swarmleave
+  author: Rijndael Brown
+  description: Leave from the Swarm Cluster
+  company: Coming Soon...
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+    - name: Ubuntu
+      versions: all

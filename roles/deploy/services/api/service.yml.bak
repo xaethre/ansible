@@ -1,0 +1,49 @@
+---
+- name: "Configure Server: [{{ name }}]"
+  block:
+  - name: "Create Secret for [{{ name }}]"
+    community.docker.docker_secret:
+      name: "{{ name }}.env"
+      data: "{{ lookup('file', '.env') | b64encode }}"
+      labels:
+        secret: "{{ lookup('file', '.env') | hash('sha1') }}"
+      data_is_b64: true
+      force: true
+      state: present
+
+  rescue:
+    - name: "Delete Existing Secret from [{{ name }}]"
+      community.docker.docker_swarm_service:
+        name: "{{ name }}"
+        state: absent
+
+    - name: "Create Secret for [{{ name }}]"
+      community.docker.docker_secret:
+        name: "{{ name }}.env"
+        data: "{{ lookup('file', '.env') | b64encode }}"
+        labels:
+          secret: "{{ lookup('file', '.env') | hash('sha1') }}"
+        data_is_b64: true
+        force: true
+        state: present
+
+
+#--------------------------------------------------------------
+
+- name: "Deploying Server: [{{ name }}]"
+  block:
+  - name: "Deploy Service: [{{ name }}]"
+    community.docker.docker_swarm_service:
+      name: "{{ name }}"
+      image: localhost:5000/api:latest
+      state: present
+      networks:
+        - name: "{{ network_name }}"
+      publish:
+        - mode: ingress
+          protocol: tcp
+          published_port: 3002
+          target_port: 3000
+      secrets:
+        - secret_name: "{{ name }}.env"
+          filename: /opt/app/.env

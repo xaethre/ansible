@@ -1,0 +1,6 @@
+---
+- name: Types of debug vars
+  vars:
+    admin: 
+  debug:
+    msg: "{{ admin | type_debug }}"

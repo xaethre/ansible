@@ -1,0 +1,9 @@
+galaxy_info:
+  author: Rijndael Brown
+  description: Deploy Services
+  company: Coming Soon...
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+    - name: Ubuntu
+      versions: all

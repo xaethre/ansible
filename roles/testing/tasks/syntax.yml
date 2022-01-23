@@ -1,0 +1,51 @@
+# простые записи
+name: test
+name2: "test\n"
+name3: 'test'
+
+# числовые записи
+age: 30
+version: 1.7
+
+# булевы значения
+isDev: True
+isDev2: on
+isDev3: yes
+
+# обьект
+user:
+  name: Vasya
+  age: 30
+
+# список №1
+users:
+  - name: Sasha
+    age: 26
+    sex: male
+  - name: Masha
+    age: 33
+    sex: female
+
+# список №2
+userList:
+  - Sasha
+  - Masha
+
+# список №3
+versions1: [1.7, 4]
+versions2: [2.3, "p2"]
+
+# JSON
+objectMy: {
+  "key": 7
+}
+
+# Multiline
+multiline: |
+  this string
+  will be displayed
+  in three lines
+
+# Singleline
+singleline: >
+  This very long string will be displayed in one line...

@@ -1,0 +1,5 @@
+---
+- name: Test filters
+  debug:
+    msg: "{{ myVar | default(12031990) }}" # set default if myVar is not set
+

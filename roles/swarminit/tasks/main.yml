@@ -1,0 +1,33 @@
+---
+- name: Initialize a Swarm Cluster
+  community.docker.docker_swarm:
+    state: present
+    advertise_addr: "{{ swarm_addr }}"
+  register: token
+
+#- name: Save Tokens
+#  set_fact:
+#    token_manager: "{{ token.swarm_facts.JoinTokens.Manager }}"
+#    token_worker: "{{ token.swarm_facts.JoinTokens.Worker }}"
+#    cacheable: true
+
+- name: Check Directory
+  delegate_to: localhost # Delegate this small task to localhost only.
+  file:
+    path: ./tokens
+    state: directory
+#  notify: dir # Using for call handlers
+
+- name: Save Token Manager
+  local_action: # DEPRECATED (!) use delegate_to
+    module: copy
+    dest: ./tokens/token-manager
+    mode: 0600
+    content: "{{ token.swarm_facts.JoinTokens.Manager }}"
+
+- name: Save Token Worker
+  local_action:
+    module: copy
+    dest: ./tokens/token-worker
+    mode: 0600
+    content: "{{ token.swarm_facts.JoinTokens.Worker }}"

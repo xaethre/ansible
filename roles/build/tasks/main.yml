@@ -1,0 +1,25 @@
+---
+- name: Clone Repository
+  ansible.builtin.git:
+    repo: 'https://github.com/xaethre/demoApp.git'
+    dest: "{{ git_folder }}"
+    version: master # select branch
+
+- name: Builing Image
+  community.docker.docker_image:
+    name: "{{ registry_name }}/{{ item.name }}"
+    tag: "{{ item.version }}"
+    push: true
+    force_source: true # Rebuild, pull image when the image already exists
+    force_tag: true # Forde tagging image
+    build:
+      path: "{{ git_folder }}"
+      dockerfile: "{{ git_folder }}/apps/{{ item.name }}/Dockerfile"
+    source: build
+  loop: "{{ services | difference(non_build_services) }}" # Exclude non_build_services (see /home/vagrant/ansible/group_vars/all/vars.yml)
+
+- name: Remove Repository
+  file:
+    state: absent
+    path: "{{ git_folder }}"
+

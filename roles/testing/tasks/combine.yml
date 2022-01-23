@@ -1,0 +1,6 @@
+---
+- name: Combine key:value with other key:value from var 'admin'
+  vars:
+    admin: { a: 1, b: 2 }
+  debug:
+    msg: "{{ admin | combine({'c': 2}) }}"

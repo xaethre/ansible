@@ -1,0 +1,9 @@
+galaxy_info:
+  author: Rijndael Brown
+  description: Configure Servers for Working with Docker Swarm
+  company: Coming Soon...
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+    - name: Ubuntu
+      versions: all

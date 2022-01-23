@@ -1,0 +1,7 @@
+---
+- name: Map task
+  vars:
+    admin: [0, 2]
+  debug:
+    msg: "{{ admin | map('extract', ['a', 'b', 'c']) | list }}"
+# Extract value equal to values from var 'admin'

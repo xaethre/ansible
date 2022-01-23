@@ -1,0 +1,53 @@
+---
+- name: Deploy task and Loops
+  include_tasks: random.yml
+#  command: echo 'test'
+#  register: result
+#- debug:
+#    var: result
+#
+#  vars:
+#    data:
+#      a: 1
+#      b: 2
+#      c: 3
+#  debug:
+#    msg: "{{ item.key }} - {{ item.value }}"
+#  loop: "{{ data | dict2items }}"
+#
+#  debug:
+#    msg: "{{ item.name }} is {{ item.group }}"
+#  loop:
+#    - { name: Vasya, group: "admin" }
+#    - { name: Masha, group: "admin" }
+#
+#  debug:
+#    msg: "{{ item }}"
+#  loop: "{{ groups['all'] }}"
+#
+#  debug:
+#    msg: "{{ item.name }}"
+#  loop:
+#    - name: Vasya
+#      group: admin
+#      roles:
+#        admin: true
+#        manager: true
+#        worker: true
+#        user: true
+#  loop_control:
+#    label: "{{ item.name }}"
+#
+#  debug:
+#    msg: "{{ outer_item.name }}"
+#    msg: "{{ item.name }} - {{ ansible_loop.allitems }}"
+#  include_tasks: inner.yml
+#  loop:
+#    - name: Masha
+#    - name: Sveta
+#    - name: Katya
+#  loop_control:
+#    loop_var: outer_item
+#    extended: true
+#    pause: 2
+#    index_var: my_index

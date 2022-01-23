@@ -1,0 +1,6 @@
+---
+- name: ZIP
+  vars:
+    admin: [1, 2, 3, 4]
+  debug:
+    msg: "{{ admin | zip(['a', 'b', 'c', 'd', 'e']) | list }}"

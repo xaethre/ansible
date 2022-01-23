@@ -1,0 +1,20 @@
+---
+- name: "Configure secret for [{{ name }}]"
+  include_tasks: "../secret-rescue.yml"
+
+#---------------------------------------------
+
+- name: "Deploying Service"
+  tags: "{{ name }}"
+  block:
+  - name: "Deploying Service: [{{ name }}]"
+    community.docker.docker_swarm_service:
+      name: "{{ name }}"
+      image: "{{ registry_name }}/{{ name }}:{{ version }}"
+      state: present
+      force_update: true # Force update even if no has changes
+      networks:
+        - name: "{{ network_name }}"
+      secrets:
+        - secret_name: "{{ name }}.env"
+          filename: /opt/app/.env

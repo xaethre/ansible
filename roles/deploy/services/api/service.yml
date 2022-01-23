@@ -1,0 +1,24 @@
+---
+- name: "Configure secret for [{{ name }}]"
+  include_tasks: "../secret-rescue.yml"
+
+#---------------------------------------------
+
+- name: "Deploying Server"
+  tags: "{{ name }}"
+  block:
+  - name: "Deploying Service: [{{ name }}]"
+    community.docker.docker_swarm_service:
+      name: "{{ name }}"
+      image: "{{ registry_name }}/{{ name }}:{{ version }}"
+      state: present
+      networks:
+        - name: "{{ network_name }}"
+      publish:
+        - mode: ingress
+          protocol: tcp
+          published_port: 3002
+          target_port: 3000
+      secrets:
+        - secret_name: "{{ name }}.env"
+          filename: /opt/app/.env

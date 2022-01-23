@@ -1,0 +1,61 @@
+---
+#- name: Production configuration for all cluster
+#  hosts: cluster
+#  roles:
+#    - production
+
+- name: Configuration of Deploy / Build group
+  hosts: deploy
+  roles:
+    - role: preconfig
+      tags: preconfig
+    - role: build
+      tags: build
+    - role: deploy
+      tags: deploy
+    - role: swarminit
+      tags: swarminit
+    - role: swarmjoin
+      tags: swarmjoin
+      type: manager # This is suffix for swarm token
+#    - role: swarmleave
+#      tags: swarmleave
+#      node: server4
+#  post_tasks:
+#    - name: Clean Token Directory
+#      delegate_to: localhost
+#      ignore_errors: true # if more than only one task
+#      tags: swarmjoin
+#      file:
+#        path: /home/vagrant/ansible/tokens
+#        state: absent
+
+- name: Configuration of Managers group
+  hosts: managers
+  roles:
+    - role: preconfig
+      tags: preconfig
+    - role: swarmjoin
+      tags: swarmjoin
+      type: manager
+
+- name: Configuration of Workers group
+  hosts: workers
+  roles:
+    - role: preconfig
+      tags: preconfig
+    - role: swarmjoin
+      tags: swarmjoin
+      type: worker
+
+- name: Configuration of Development group
+  hosts: devel
+  roles:
+    - role: testing
+      tags: testing  # Restricted only one role (!)
+    - role: preconfig
+      tags: preconfig
+    - role: swarmjoin
+      tags: swarmjoin
+      type: manager
+

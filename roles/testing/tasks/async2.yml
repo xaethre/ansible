@@ -1,0 +1,9 @@
+---
+- name: test async
+  hosts: local
+  tasks:
+    - name: sleep task
+      block:
+        - name: reboot
+          shell: reboot
+      become: true
